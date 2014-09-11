@@ -60,5 +60,22 @@ app.use(function(err, req, res, next) {
     });
 });
 
+var mongoose = require("mongoose");
+mongoose.connect(process.env.MONGOHQ_URL);
+
+
+var restInfo = new mongoose.Schema({
+    name: String,
+    email: String,
+    phone: String,
+    comments: String
+});
+
+var Info = mongoose.model('Info', restInfo);
+
+var testi1 = new Info( { name: 'Bob Smith', email: 'b@s.com', phone: '000-000-9999', comments: 'hi'} );
+
+testi1.save();
+
 
 module.exports = app;
