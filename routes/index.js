@@ -11,7 +11,7 @@ router.get("/t", function(req, res){
 });
 
 router.get("/app", function(req, res){
-   res.render('rindex', {title: "Restaurant in the Bay Area"});
+   res.render('rindex', {title: "Restaurant in the YAY Area"});
 });
 
 module.exports = router;
