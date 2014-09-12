@@ -6,7 +6,7 @@ var router = express.Router();
 var mongoose = require("mongoose");
 mongoose.connect(process.env.MONGOHQ_URL);
 
-
+// ----- User Info --------//
 var peopleInfo = new mongoose.Schema({
 	code: String,
     name: String,
@@ -22,9 +22,18 @@ var Info = mongoose.model('Info', peopleInfo);
 //testi1.save();
 
 
-router.get("/test", function(req, res){
-	res.json({method: 'GET', serverTime: new Date()});
+// ----------- Restaurant ------------ //
+var restaurant = new mongoose.Schema({
+	code: String,
+    restaurant: String
 });
+
+var Rest = mongoose.model('Rest', restaurant);
+
+//------test sample------//
+// router.get("/test", function(req, res){
+// 	res.json({method: 'GET', serverTime: new Date()});
+// });
 
 // router.post("/test", function(req, res){
 // 	var output = { method: 'POST', serverTime: new Date() };
@@ -46,6 +55,9 @@ router.get("/test", function(req, res){
 	
 // 	res.json(output);
 // });
+
+
+// --------------- UserInfo ----------------//
 
 router.post("/info", function(req, res){
 	var info = new Info({ 
@@ -77,6 +89,36 @@ router.get("/info/:infoCode", function(req, res){
 	});
 });
 
+
+
+// ---------------- Restaurants ----------------- //
+
+router.post("/restaurant", function(req, res){
+	var restaurant = new Rest({ 
+		code: (new Date()).getTime().toString(),
+		restaurant:req.body.restaurant
+	});
+	
+	restaurant.save(function(err, postedRest){
+		res.json(postedRest);
+	});
+});
+
+router.get("/restaurant", function(req, res){
+	Rest.find({}).exec(function(err, result){
+		res.json(result);
+	});
+});
+
+router.get("/restaurant/:restCode", function(req, res){
+	Restaurant.findOne({ code:req.params.restCode }).exec(function(err, restaurant){
+		if (restaurant) {
+			res.json(restaurant);
+		} else {
+			res.json(404, {error: "Nothing found"});
+		}
+	});
+});
 
 
 module.exports = router;

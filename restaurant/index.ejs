@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <title>MY GOOD RESTAURANT APP</title>
+    <title>MY RESTAURANT APP</title>
     <meta name="description" content="Restaurants Around The Bay Area">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta property="og:type" content="website"/>
@@ -12,24 +12,21 @@
     <meta property="og:site_name" content="maaaryle.github.io"/>
     <meta property="og:description" content="Decide on what you want to eat in seconds."/>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <!--
     <link href="index.css" rel="stylesheet">
-    -->
-    <link rel='stylesheet' href='/stylesheets/index.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
     <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v2.0.0.js"></script>
-    <script src='../javascripts/index.js'></script>
+    <script src="index.js"></script>
 
 </head>
 
 <header>
-    <h1 class="text-center text-responsive">Restaurants Around The Bay Area</h1>
+    <h1 class="text-center text-responsive">Restaurants Around The Bay Area2</h1>
 </header>
 
 <body>
-	<form action="/orderpage" method="POST">
+	<form action="orderpage.html" method="POST">
 	            
 	            <!--IMAGE-->
 	    <div id="picture">
@@ -68,7 +65,7 @@
 
 	            <!--SUBMIT BUTTON-->
 	    <div>
-	    	<button id="button" type="submit" class="btn btn-danger btn-sm">Submit</button>
+	    <a href="orderpage.html"><button id="button" type="submit" class="btn btn-danger btn-sm">Submit</button></a>
 	    </div>
 
 	            <!--THE END!!-->
@@ -78,7 +75,7 @@
 <script id="resList" type="text/x-handlebars-template">
 	<option>Please Select A Restaurant</option>
     {{#each list}}
-        <option class="restaurant" href="#" id="{{id}}">{{restaurant}}</option>
+        <option class="restaurant" href="#" id="{{id}}">{{attributes.Name}}</option>
     {{/each}}
 </script>
 

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <title>MY GOOD RESTAURANT APP</title>
+    <title>MY RESTAURANT APP</title>
     <meta name="description" content="Restaurants Around The Bay Area">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta property="og:type" content="website"/>
@@ -11,74 +11,71 @@
     <meta property="og:image" content="http://www.skiholidaysmariaalm.com/wp-content/uploads/2012/06/posterfoodlogoforkknifeprint-892aae035d3c5a05bf4a00bb38c3b320_h.jpg"/>
     <meta property="og:site_name" content="maaaryle.github.io"/>
     <meta property="og:description" content="Decide on what you want to eat in seconds."/>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <!--
-    <link href="index.css" rel="stylesheet">
-    -->
-    <link rel='stylesheet' href='/stylesheets/index.css' />
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
     <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v2.0.0.js"></script>
-    <script src='../javascripts/index.js'></script>
+    <script src="script.js"></script>
 
 </head>
 
 <header>
-    <h1 class="text-center text-responsive">Restaurants Around The Bay Area</h1>
+    <h1>Restaurants Around The Bay Area</h1>
 </header>
 
 <body>
-	<form action="/orderpage" method="POST">
+	<form action="orderpage.html" method="POST">
 	            
 	            <!--IMAGE-->
-	    <div id="picture">
-	        <img src="http://www.skiholidaysmariaalm.com/wp-content/uploads/2012/06/posterfoodlogoforkknifeprint-892aae035d3c5a05bf4a00bb38c3b320_h.jpg" class="img-rounded img-responsive">
+	    <div>
+	        <img src="http://www.skiholidaysmariaalm.com/wp-content/uploads/2012/06/posterfoodlogoforkknifeprint-892aae035d3c5a05bf4a00bb38c3b320_h.jpg">
 	    </div>
 
 	            <!--RESTAURANT LIST & MENU ITEMS-->
-	    <section class="container">
-	        <select class="form-control" id="restListContainer"></select>
+	    <section>
+	        <!-- <select id="restaurantList"><option>Please Select Restaurant</option></select> -->
+	        <select id='restListContainer'></select>
 	        <ul id="menuItems"></ul>
 	    </section>
 
 	            <!--TOTAL ITEM COUNT & PRICE-->
-	    <section class="text">
+	    <section>
 	        <div id="count"></div>
 	        <div id="total"></div>
 	    </section>
 
 	            <!--USER INPUT-->
 	    <section class="userInput">
-			<form role="form">
-			  <div class="col-xs-6">
-			    <input type="name" class="form-control" id="name" placeholder="Name">
-			  </div>
-			  <div class="col-xs-6">
-			    <input type="email" class="form-control" id="email" placeholder="Email">
-			  </div>
-		  	  <div class="col-xs-6">
-			    <input type="phone" class="form-control" id="phone" placeholder="Phone Number">
-			  </div>
-			  <div class="col-xs-6">
-			    <input class="form-control" id="comments" placeholder="Additional Notes">
-			  </div>	
-			</form>
-		</section>
+	        <div>
+	            <lable>phone</lable>
+	            <input id="phone" name="text" required placeholder="(xxx)xxx-xxxx">
+	        </div>
+	        <div>
+	            <lable>email</lable>
+	            <input id="email" type="email" name="email" required placeholder="email address">
+	        </div>
+	        <div>
+	            <lable>comments</lable>
+	            <input id="comments" type="comment" name="comment" required placeholder="additional comments">
+	        </div>
+	    </section>
+
 
 	            <!--SUBMIT BUTTON-->
 	    <div>
-	    	<button id="button" type="submit" class="btn btn-danger btn-sm">Submit</button>
+	    <a href="orderpage.html"><button id="submit" type="submit">Submit Order</button></a>
 	    </div>
 
 	            <!--THE END!!-->
-	    <footer></footer>
+	    <footer>COPYRIGHTS!!</footer>
+
+
 	</form>
 
 <script id="resList" type="text/x-handlebars-template">
-	<option>Please Select A Restaurant</option>
     {{#each list}}
-        <option class="restaurant" href="#" id="{{id}}">{{restaurant}}</option>
+        <option class="restaurant" href="#" id="{{id}}">{{attributes.Name}}</option>
     {{/each}}
 </script>
 

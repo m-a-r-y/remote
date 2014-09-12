@@ -3,15 +3,19 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+  	res.send("Hello World");
+  //res.render('index', { title: 'Express' });
 });
 
-router.get("/t", function(req, res){
+router.get("/sample", function(req, res){
    res.render('index', {title: "House", name: "Mary"});
 });
 
 router.get("/app", function(req, res){
-   res.render('rindex', {title: "Restaurant in the YAY Area"});
+   res.render('index', {script: '../public/javascripts/index.js'});
 });
 
+router.get("/orderpage", function(req, res){
+	res.render('orderpage', {script: '../public/javascripts/index.js'});
+});
 module.exports = router;

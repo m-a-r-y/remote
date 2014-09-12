@@ -1,0 +1,22 @@
+body {
+	background-color: #f1c40f;
+	margin: 5px;
+}
+
+#restListContainer {
+	margin-top: 15px;	
+}
+
+.text {
+	margin-left: 15px;
+}
+
+#button {
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+#picture {
+	width: 50%;
+	margin: 0 auto;
+}
