@@ -84,13 +84,13 @@
 <script id="resList" type="text/x-handlebars-template">
 	<option>Please Select A Restaurant</option>
     {{#each list}}
-        <option class="restaurant" href="#" id="{{id}}">{{restaurantName}}</option>
+        <option class="restaurant" href="#" id="{{code}}">{{restaurantName}}</option>
     {{/each}}
 </script>
 
 <script id="itemList" type="text/x-handlebars-template">
     {{#each list2}}
-        <li class="item" data-source="{{attributes.Restaurant_ID}}"><input type="checkbox" data-price={{attributes.Price}}  class="checked">{{attributes.Title}} -- ${{attributes.Price}}</li>
+        <li class="item" data-source="{{restaurantID}}"><input type="checkbox" data-price={{price}}  class="checked">{{itemName}} -- {{price}}</li>
     {{/each}}
 </script>
 

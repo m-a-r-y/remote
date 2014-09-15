@@ -11,15 +11,21 @@ $(document).ready(function(){
   var template2 = Handlebars.compile(source2);
   var refreshList2 = function(data){
       var html    = template2(data);
+      console.log(html);
       $("#menuItems").html(html);
   };
 
-  $.ajax("/api/restaurant").then(function(r){
-    //console.log(r);
+  $.ajax("/api/restaurants").then(function(r){
+    console.log(r);
     refreshList({ list: r });
   });
   
-
+  $.ajax("/api/menuitems").then(function(r){
+    console.log(r);
+    refreshList2({ list2: r });
+    $(".item").hide();
+    calculate();
+  });
 
 
 
@@ -61,40 +67,41 @@ $(document).ready(function(){
 //     //   menuItemP.push($("<li />", { "class": 'item', "data-source": mi.attributes.Restaurant_ID}).append(box).append(" " + mi.attributes.Title+" $"+mi.attributes.Price));
 //     // })
 //     // $("#menuItems").append(menuItemP);
+function calculate(){
+    var sum = 0;
+    $(".checked").on("click", function() {
+     if($(this).is(':checked')){
+       sum = sum + parseInt($(this).attr("data-price").split("$")[1]);
+     } else {
+       sum = sum - parseInt($(this).attr("data-price").split("$")[1]);
+     }
 
-//     var sum = 0;
-//     $(".checked").on("click", function() {
-//      if($(this).is(':checked')){
-//        sum = sum + parseInt($(this).attr("data-price"));
-//      } else {
-//        sum = sum - parseInt($(this).attr("data-price"));
-//      }
+     $("#count").text("You've selected " + $("input:checked").length + " item(s)!");
+     $("#total").text("Total amount due: $"+ sum + ".");
 
-//      $("#count").text("You've selected " + $("input:checked").length + " item(s)!");
-//      $("#total").text("Total amount due: $"+ sum + ".");
+   });
+}
 
-//    });
+        // $("#restaurantList").change(function(){
+        //      $( "select option:selected" ).each(function() {
+        //         $(".item").hide().filter("[data-source=" + this.id + "]").show();
+        //     });
+        //     $("option:selected").hide().filter("[data-source=" + this.id + "]").show();
+        // });
+$("#restListContainer").on("change", function(event) {
+   $( "option:selected" ).each(function() {
+    console.log(this);
+      $(".item").hide().filter("[data-source=" + this.id + "]").show();
+  })
+});
+//$("option:selected").hide().filter("[data-source=" + this.id + "]").show();  
+$("li").each(function(){
+  $(this).children('input')[0].checked = false;
+});    
 
-//     $(".item").hide();
-//         // $("#restaurantList").change(function(){
-//         //      $( "select option:selected" ).each(function() {
-//         //         $(".item").hide().filter("[data-source=" + this.id + "]").show();
-//         //     });
-//         //     $("option:selected").hide().filter("[data-source=" + this.id + "]").show();
-//         // });
-// $("#restListContainer").on("change", function(event) {
-//  $( "option:selected" ).each(function() {
-//   $(".item").hide().filter("[data-source=" + this.id + "]").show();
-// });
-//  $("option:selected").hide().filter("[data-source=" + this.id + "]").show();  
-//  $("li").each(function(){
-//   $(this).children('input')[0].checked = false;
-// });    
-
-//  sum = 0;
-//  $("#count").text("You've selected " + $("input:checked").length + " item(s)!");
-//  $("#total").text("Total amount due: $"+ sum + ".");
-// });
+ sum = 0;
+ $("#count").text("You've selected " + $("input:checked").length + " item(s)!");
+ $("#total").text("Total amount due: $"+ sum + ".");
 
 // },
 
