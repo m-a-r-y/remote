@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  console.log("hi");
+  //console.log("hi");
   var source  = $("#resList").html();
   var template = Handlebars.compile(source);
   var refreshList = function(data){
@@ -15,11 +15,11 @@ $(document).ready(function(){
   };
 
   $.ajax("/api/restaurant").then(function(r){
-    console.log(r);
+    //console.log(r);
     refreshList({ list: r });
   });
   
-});
+
 
 
 
@@ -148,9 +148,9 @@ $(document).ready(function(){
 //   saveNewRestaurantItem(name, email, comment, phone, item);
 // });
 
-// $('button').click(function(){
-//   window.location.href='/orderpage';
-// });
+$('button').click(function(){
+  window.location.href='/orderpage';
+});
 
 // var source  = $("#resList").html();
 // var template = Handlebars.compile(source);
@@ -270,4 +270,4 @@ $(document).ready(function(){
 // //     }]
 
 
-
+});

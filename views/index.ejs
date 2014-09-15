@@ -71,6 +71,12 @@
 	    	<button id="button" type="submit" class="btn btn-danger btn-sm">Submit</button>
 	    </div>
 
+
+	    		<!-- User Text Box -->
+	     <div>
+			<textarea class="form-control" rows="3"></textarea>
+	    </div>
+
 	            <!--THE END!!-->
 	    <footer></footer>
 	</form>
@@ -78,7 +84,7 @@
 <script id="resList" type="text/x-handlebars-template">
 	<option>Please Select A Restaurant</option>
     {{#each list}}
-        <option class="restaurant" href="#" id="{{id}}">{{restaurant}}</option>
+        <option class="restaurant" href="#" id="{{id}}">{{restaurantName}}</option>
     {{/each}}
 </script>
 
@@ -87,6 +93,16 @@
         <li class="item" data-source="{{attributes.Restaurant_ID}}"><input type="checkbox" data-price={{attributes.Price}}  class="checked">{{attributes.Title}} -- ${{attributes.Price}}</li>
     {{/each}}
 </script>
+
+<script id="textBox" type="text/x-handlebars-template">
+    {{#if editing}}
+              <div class="question-input"><input value="{{question}}"></div>
+    {{else}}
+              <div class="question-body">{{question}}</div>
+    {{/if}}
+</script>
+
+
 
 </body>
 </html>

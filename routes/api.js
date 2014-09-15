@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 mongoose.connect(process.env.MONGOHQ_URL);
 
 // ----- User Info Schema --------//
-var peopleInfo = new mongoose.Schema({
+var peopleInfoSchema = new mongoose.Schema({
 	code: String,
     name: String,
     email: String,
@@ -14,11 +14,11 @@ var peopleInfo = new mongoose.Schema({
     comments: String
 });
 
-var Info = mongoose.model('Info', peopleInfo);
+var INFO = mongoose.model('Info', peopleInfoSchema);
 
 //------------- User Info Schema -------------//
 router.post("/info", function(req, res){
-	var info = new Info({ 
+	var info = new INFO({ 
 		code: (new Date()).getTime().toString(),
 		name:req.body.name, 
 		email:req.body.email, 
@@ -32,13 +32,13 @@ router.post("/info", function(req, res){
 });
 
 router.get("/info", function(req, res){
-	Info.find({}).exec(function(err, result){
+	INFO.find({}).exec(function(err, result){
 		res.json(result);
 	});
 });
 
 router.get("/info/:infoCode", function(req, res){
-	Info.findOne({ code:req.params.infoCode }).exec(function(err, info){
+	INFO.findOne({ code:req.params.infoCode }).exec(function(err, info){
 		if (info) {
 			res.json(info);
 		} else {
@@ -53,28 +53,30 @@ var restaurantSchema = new mongoose.Schema({
     restaurantName: String
 });
 
+// 'rest' = name of the collection in Mongo database ; REST = model
 var REST = mongoose.model('rest', restaurantSchema);
 
 // ---------------- Restaurants ----------------- //
-
-router.post("/restaurant", function(req, res){
+//create a new restaurant
+router.post("/restaurants", function(req, res){
 	var restaurant = new REST({ 
 		code: (new Date()).getTime().toString(),
-		restaurantName: req.body.restaurantName
+		restaurantName:req.body.restaurantName
 	});
-	
-	restaurant.save(function(err, postedRest){
-		res.json(postedRest);
+	restaurant.save(function(err, postedRestaurant){
+		res.json(postedRestaurant);
 	});
 });
 
-router.get("/restaurant", function(req, res){
+//list all restaurants ; model is an object
+router.get("/restaurants", function(req, res){
 	REST.find({}).exec(function(err, result){
 		res.json(result);
 	});
 });
 
-router.get("/restaurant/:restCode", function(req, res){
+//get one restaurant ; params = URL
+router.get("/restaurants/:restCode", function(req, res){
 	REST.findOne({ code:req.params.restCode }).exec(function(err, restaurant){
 		if (restaurant) {
 			res.json(restaurant);
@@ -84,78 +86,69 @@ router.get("/restaurant/:restCode", function(req, res){
 	});
 });
 
-// // ---------------- Menu Items ----------------- //
-// // --------- Menu Items -----------//
-// var menuItemsSchema = new mongoose.Schema({
-// 	code: String,
-//     itemName: String
-// });
+// edit a single restaurant
+router.put('/restaurants/:restCode', function(req, res) {
+   REST.findOne({ code:req.params.restCode }).exec(function(err, result){
+       console.log("update begin");
+       result.restaurantName = req.body.restaurantName || result.restaurantName;
+       //result.price = req.body.price || result.price;
+       //result.restaurant_code = req.body.restaurant_code || result.restaurant_code;
+       result.save(function(err) {
+           if (!err) {
+               console.log("updated");
+           } else {
+               console.log(err);
+           }
+           res.json(result);
+       });
+   });
+});
 
-// var Items = mongoose.model('Items', menuItems);
 
-// //-----------------------------------//
+// --------- Menu Items Schema-----------//
+var menuItemsSchema = new mongoose.Schema({
+	code: String,
+    itemName: String,
+    price: String,
+    restaurantID : String,
+    restaurantName: String
+});
 
-// router.post("/menuitems", function(req, res){
-// 	var menuitems = new Items({ 
-// 		code: (new Date()).getTime().toString(),
-// 		menuitems:req.body.menuitems
-// 	});
-	
-// 	menuitems.save(function(err, postedRest){
-// 		res.json(postedRest);
-// 	});
-// });
+var ITEM = mongoose.model('items', menuItemsSchema);
 
-// router.get("/menuitems", function(req, res){
-// 	Items.find({}).exec(function(err, result){
-// 		res.json(result);
-// 	});
-// });
+// ---------------- Menu Items ----------------- //
 
-// router.get("/menuitems/:itemCode", function(req, res){
-// 	menutItems.findOne({ code:req.params.itemCode }).exec(function(err, menuitems){
-// 		if (menuitems) {
-// 			res.json(menuitems);
-// 		} else {
-// 			res.json(404, {error: "Nothing found"});
-// 		}
-// 	});
-// });
+router.post("/menuitems", function(req, res){
+	var menuitems = new ITEM ({ 
+		code: (new Date()).getTime().toString(),
+		itemName:req.body.itemName,
+		price: req.body.price,
+		restaurantID: req.body.restaurantID,
+		restaurantName: req.body.restaurantName
+	});
+	menuitems.save(function(err, result){
+		res.json(result);
+	});
+});
+
+router.get("/menuitems", function(req, res){
+	ITEM.find({}).exec(function(err, result){
+		res.json(result);
+	});
+});
+
+router.get("/menuitems/:itemCode", function(req, res){
+	ITEM.findOne({ code:req.params.itemCode }).exec(function(err, result){
+		if (result) {
+			res.json(result);
+		} else {
+			res.json(404, {error: "Nothing found"});
+		}
+	});
+});
 
 
 module.exports = router;
-
-//var testi1 = new Info( { name: 'Bob Smith', email: 'b@s.com', phone: '000-000-9999', comments: 'hi'} );
-
-//testi1.save();
-
-//------test sample------//
-// router.get("/test", function(req, res){
-// 	res.json({method: 'GET', serverTime: new Date()});
-// });
-
-// router.post("/test", function(req, res){
-// 	var output = { method: 'POST', serverTime: new Date() };
-// 	// ['varA', 'varB', 'varC']
-// 	Object.keys(req.body).forEach(function(key) {
-// 		output[key] = req.body[key];
-// 	// output ['varA'] = req.body['varA'];
-// 	});
-// 	res.json(output);
-// });
-
-
-// router.post("/test", function(req, res){
-	
-// 	var output = req.body;
-// 	output['method'] = "POST";
-// 	output['serverTime'] = new Date();
-// 	output['numberKeysInData'] = Object.keys(req.body).length;
-	
-// 	res.json(output);
-// });
-
-
 
 
 

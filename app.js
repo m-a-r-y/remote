@@ -11,7 +11,32 @@ var restaurant = require('./routes/restaurant');
 
 var apiRouter = require('./routes/api');
 
+// mongoose 
+mongoose = require("mongoose");
 var app = express();
+
+
+
+// var logSchema = new mongoose.Schema({
+//     code: String,
+//     responseTime: Number ,
+//     endpoint: String ,
+//     keys: []
+// });
+
+// var Log = mongoose.model('Log', logSchema);
+// app.use(function(req, res, next){
+    
+//     var start = Date.now();
+//     res.on("finish", function(){
+//         var duration = Date.now() - start;
+//         var log = new Log ( { responseTime: duration, endpoint: req.originalUrl , keys: Object.keys(req) } );
+//         console.log(req.form());
+//         log.save();
+//     });
+//     next();
+// });
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
